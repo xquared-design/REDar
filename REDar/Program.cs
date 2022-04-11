@@ -12,10 +12,8 @@ builder.Services.AddDbContext<REDarDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("REDarDataContext")));
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("REDarContext");
 builder.Services.AddDbContext<REDarContext>(options =>
-    options.UseSqlServer(connectionString));builder.Services.AddDbContext<REDarContext>(options =>
-    options.UseSqlServer(connectionString));builder.Services.AddDbContext<REDarContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
