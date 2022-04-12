@@ -12,8 +12,8 @@ using REDar.Models;
 namespace REDar.Migrations
 {
     [DbContext(typeof(REDarDataContext))]
-    [Migration("20220410122207_initialCreate")]
-    partial class initialCreate
+    [Migration("20220411201225_CreateInitialData")]
+    partial class CreateInitialData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,11 @@ namespace REDar.Migrations
 
             modelBuilder.Entity("REDar.Areas.Identity.Data.REDarUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -79,7 +82,7 @@ namespace REDar.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("REDarUser");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("REDar.Models.UserMeasurement", b =>
@@ -90,15 +93,11 @@ namespace REDar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("type")
                         .HasColumnType("int");

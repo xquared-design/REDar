@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using REDar.Models;
+using REDar.Enum;
 using REDar.Areas.Identity.Data;
-
+using Newtonsoft.Json;
 
 namespace REDar.Controllers
 {
@@ -22,10 +23,28 @@ namespace REDar.Controllers
         }
 
         // GET: UserMeasurements
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? typeIn)
         {
+            
+            if (typeIn == null || typeIn > 6)
+            {
+                typeIn = 6;
+            }
+
+            MeasType mt = (MeasType)typeIn;
+
             var rEDarDataContext = _context.UserMeasurement.Include(u => u.User);
-            return View(await rEDarDataContext.ToListAsync());
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            int x = 10;
+            foreach (var item in await rEDarDataContext.Where<UserMeasurement>(m=>m.type.Equals(mt)).ToListAsync())
+            {
+                
+                dataPoints.Add(new DataPoint(x, (double)item.val));
+                x += 10;
+            }
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewBag.measType = mt;
+            return View();
         }
 
         // GET: UserMeasurements/Details/5

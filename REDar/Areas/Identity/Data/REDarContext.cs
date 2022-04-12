@@ -6,7 +6,7 @@ using REDar.Models;
 
 namespace REDar.Data;
 
-public class REDarContext : IdentityDbContext<REDarUser>
+public class REDarContext : IdentityDbContext<REDarUser, IdentityRole<int>, int>
 {
     public REDarContext(DbContextOptions<REDarContext> options)
         : base(options)
@@ -20,5 +20,5 @@ public class REDarContext : IdentityDbContext<REDarUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
     }
-
+    public DbSet<REDarUser> REDarUser { get; set; }
 }

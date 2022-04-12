@@ -13,7 +13,7 @@ namespace REDar.Models
 
         [ForeignKey("User")]
         [Required]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         public REDarUser User { get; set; }
 
@@ -24,8 +24,8 @@ namespace REDar.Models
 
 
 
-        [Timestamp]
+        
         [Required]
-        public Byte[] TimeStamp { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

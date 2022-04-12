@@ -5,15 +5,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace REDar.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class CreateInitialData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "REDarUser",
+           /* migrationBuilder.CreateTable(
+                name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BMI = table.Column<float>(type: "real", nullable: true),
                     DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -33,8 +34,8 @@ namespace REDar.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_REDarUser", x => x.Id);
-                });
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });*/
 
             migrationBuilder.CreateTable(
                 name: "UserMeasurement",
@@ -42,18 +43,18 @@ namespace REDar.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     type = table.Column<int>(type: "int", nullable: false),
                     val = table.Column<float>(type: "real", nullable: true),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserMeasurement", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserMeasurement_REDarUser_UserId",
+                        name: "FK_UserMeasurement_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "REDarUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -70,7 +71,7 @@ namespace REDar.Migrations
                 name: "UserMeasurement");
 
             migrationBuilder.DropTable(
-                name: "REDarUser");
+                name: "AspNetUsers");
         }
     }
 }

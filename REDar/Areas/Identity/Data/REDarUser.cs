@@ -9,7 +9,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace REDar.Areas.Identity.Data;
 
 // Add profile data for application users by adding properties to the REDarUser class
-public class REDarUser : IdentityUser
+
+[Table("AspNetUsers")]
+public class REDarUser : IdentityUser<int>
 {
     [PersonalData]
     [Display(Name = "Body Mass Index")]
